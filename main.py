@@ -10,9 +10,9 @@ def get_random_number():
 
     with open(csv_path, newline='', encoding='utf-8') as f:
         for row in f:
-            random_words.append(row.strip())
+            random_words.append(row)
 
-    n = random.randint(0,len(random_words) - 1)
+    n = random.randint(0,len(random_words))
     word = random_words[n]
     letter_amount = len(word)
     return word, letter_amount
@@ -27,7 +27,6 @@ def get_model_stages():
         for i in range(0, len(lines), 7):
             stage = ''.join(lines[i:i+7])
             stages.append(stage)
-
     return stages
 
 
@@ -54,13 +53,14 @@ def main():
         answer = input("Letter: ").lower()
 
         if answer in word:
-            d = word.rfind(answer)
-            if d != -1 and temp_word[d] == "_":
-                temp_word = temp_word[:d] + answer + temp_word[d+1:]
-                if "_" not in temp_word:
-                    print("You win!")
-                    print("Word:", word)
-                    game_over = True
+            for pos, char in enumerate(word):
+                if char == answer and temp_word[pos] == "_":
+                    temp_word = temp_word[:pos] + answer + temp_word[pos+1:]
+            if "_" not in temp_word:
+                print("You win!")
+                print("Word:", word)
+                game_over = True
+
         else:
             i += 1         
 main()
