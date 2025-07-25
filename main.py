@@ -54,7 +54,7 @@ def main():
 
         if answer in word:
             for pos, char in enumerate(word):
-                if char == answer and temp_word[pos] == "_":
+                if char == answer and temp_word[pos] == '_':
                     temp_word = temp_word[:pos] + answer + temp_word[pos+1:]
             if "_" not in temp_word:
                 print("You win!")
